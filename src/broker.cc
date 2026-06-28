@@ -114,6 +114,7 @@ void MessageBroker::handle_subscribe(const Packet& packet, std::vector<uint8_t>&
 }
 
 void MessageBroker::handle_unsubscribe(const Packet& packet, std::vector<uint8_t>& response_bytes) {
+    (void)response_bytes;
     ClientSession* session = session_manager_.get_session(packet.client_id);
     if (!session || !session->is_authenticated) {
         return;

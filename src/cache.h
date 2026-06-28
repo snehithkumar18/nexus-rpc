@@ -15,7 +15,7 @@ private:
     DiskManager& disk_manager;
     std::unordered_map<uint32_t, Page*> page_directory;
     std::vector<uint32_t> lru_queue;
-
+    void evict();
 
 public:
     BufferPoolManager(size_t size, DiskManager& disk_mgr);
