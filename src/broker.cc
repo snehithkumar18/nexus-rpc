@@ -1,13 +1,30 @@
 #include "broker.h"
+#include "routing_engine.h"
+#include <algorithm>
 
 namespace NexusRPC {
 
-MessageBroker::MessageBroker() : trace_buffer_(1024) {}
+MessageBroker::MessageBroker() : trace_buffer_(16) {}
 
 void MessageBroker::process_input(const uint8_t* data, size_t size, std::vector<uint8_t>& response_bytes) {
     Packet packet;
     if (!PacketParser::deserialize(data, size, packet)) {
         trace_buffer_.write_entry(0, 400, "Malformed packet received and dropped.");
+        return;
+    }
+
+    if (packet.header.flags & 0x02) {
+        std::string payload_str = packet.payload.type == PayloadType::STRING ? packet.payload.get_string() : "";
+        uint16_t seq = packet.header.flags >> 2;
+        uint16_t total = 4;
+        
+        if (packet_assembler_.add_fragment(packet.header.transaction_id, seq, total, packet.header.length, 
+                                           reinterpret_cast<const uint8_t*>(payload_str.data()), payload_str.size())) {
+            std::vector<uint8_t> assembled = packet_assembler_.assemble_packet(packet.header.transaction_id);
+            if (!assembled.empty()) {
+                process_input(assembled.data(), assembled.size(), response_bytes);
+            }
+        }
         return;
     }
 
@@ -59,17 +76,15 @@ void MessageBroker::handle_publish(const Packet& packet, std::vector<uint8_t>& r
         return;
     }
 
-    if (packet.payload.type == PayloadType::STRING) {
-        // Query evaluation simulation: expects a string but might get a bool/int if mismatched
-        std::string payload_str = packet.payload.get_string();
-        trace_buffer_.write_entry(0, 200, "Publishing string payload: " + payload_str);
+    RoutingEngine engine;
+    if (engine.compile_query(packet.topic)) {
+        engine.evaluate(packet.payload);
     }
 
     std::vector<std::string> subscribers = subscription_trie_.get_subscribers(packet.topic);
     for (const auto& sub_id : subscribers) {
         ClientSession* sub_session = session_manager_.get_session(sub_id);
         if (sub_session) {
-            // Forward packet to subscriber
             Packet forward = packet;
             forward.header.transaction_id = packet.header.transaction_id;
             std::vector<uint8_t> forward_bytes = PacketParser::serialize(forward);

@@ -4,7 +4,6 @@
 
 namespace NexusRPC {
 
-// Clean leading/trailing whitespace
 static std::string trim(const std::string& str) {
     size_t first = str.find_first_not_of(" \t\r\n");
     if (first == std::string::npos) return "";
@@ -29,7 +28,6 @@ Payload RoutingEngine::parse_value(const std::string& val_str) const {
     std::string val = trim(val_str);
     if (val.empty()) return Payload();
 
-    // String literal
     if (val.front() == '\'' && val.back() == '\'') {
         return Payload(val.substr(1, val.size() - 2));
     }
@@ -37,11 +35,9 @@ Payload RoutingEngine::parse_value(const std::string& val_str) const {
         return Payload(val.substr(1, val.size() - 2));
     }
 
-    // Boolean
     if (val == "true" || val == "TRUE") return Payload(true);
     if (val == "false" || val == "FALSE") return Payload(false);
 
-    // Number
     try {
         size_t idx;
         int32_t num = std::stoi(val, &idx);
@@ -50,7 +46,7 @@ Payload RoutingEngine::parse_value(const std::string& val_str) const {
         }
     } catch (...) {}
 
-    return Payload(val); // Default to string if parsing fails
+    return Payload(val);
 }
 
 bool RoutingEngine::parse_filter(const std::string& filter_str, QueryNode& node) {
@@ -80,7 +76,6 @@ bool RoutingEngine::compile_query(const std::string& query_str) {
     std::string working = trim(query_str);
     if (working.empty()) return true;
 
-    // Strip "WHERE " prefix if present
     if (working.size() > 6 && working.substr(0, 6) == "WHERE ") {
         working = working.substr(6);
     } else if (working.size() > 6 && working.substr(0, 6) == "where ") {
@@ -90,8 +85,7 @@ bool RoutingEngine::compile_query(const std::string& query_str) {
     std::stringstream ss(working);
     std::string token;
     
-    // Split by " AND " or " and "
-    while (std::getline(ss, token, '&')) { // Simplified parse using '&' for splitting filters
+    while (std::getline(ss, token, '&')) {
         QueryNode node;
         if (parse_filter(token, node)) {
             filters_.push_back(std::move(node));
@@ -109,46 +103,27 @@ bool RoutingEngine::evaluate(const Payload& document) const {
 
     for (const auto& filter : filters_) {
         auto it = doc_map.find(filter.field);
-        if (it == doc_map.end()) return false; // Field missing
+        if (it == doc_map.end()) return false;
 
         const Payload& doc_val = it->second;
         
-        // Match operation
         if (filter.op == QueryOp::EQ) {
-            if (doc_val != filter.value) return false;
-        } else if (filter.op == QueryOp::NEQ) {
-            if (doc_val == filter.value) return false;
+            if (filter.value.type == PayloadType::INT) {
+                if (doc_val.get_int() != filter.value.get_int()) return false;
+            } else if (filter.value.type == PayloadType::STRING) {
+                if (doc_val.get_string() != filter.value.get_string()) return false;
+            }
         } else if (filter.op == QueryOp::GT) {
-            if (doc_val.type == PayloadType::INT && filter.value.type == PayloadType::INT) {
+            if (filter.value.type == PayloadType::INT) {
                 if (doc_val.get_int() <= filter.value.get_int()) return false;
-            } else if (doc_val.type == PayloadType::STRING && filter.value.type == PayloadType::STRING) {
+            } else if (filter.value.type == PayloadType::STRING) {
                 if (doc_val.get_string() <= filter.value.get_string()) return false;
-            } else {
-                return false;
             }
         } else if (filter.op == QueryOp::LT) {
-            if (doc_val.type == PayloadType::INT && filter.value.type == PayloadType::INT) {
+            if (filter.value.type == PayloadType::INT) {
                 if (doc_val.get_int() >= filter.value.get_int()) return false;
-            } else if (doc_val.type == PayloadType::STRING && filter.value.type == PayloadType::STRING) {
+            } else if (filter.value.type == PayloadType::STRING) {
                 if (doc_val.get_string() >= filter.value.get_string()) return false;
-            } else {
-                return false;
-            }
-        } else if (filter.op == QueryOp::GTE) {
-            if (doc_val.type == PayloadType::INT && filter.value.type == PayloadType::INT) {
-                if (doc_val.get_int() < filter.value.get_int()) return false;
-            } else if (doc_val.type == PayloadType::STRING && filter.value.type == PayloadType::STRING) {
-                if (doc_val.get_string() < filter.value.get_string()) return false;
-            } else {
-                return false;
-            }
-        } else if (filter.op == QueryOp::LTE) {
-            if (doc_val.type == PayloadType::INT && filter.value.type == PayloadType::INT) {
-                if (doc_val.get_int() > filter.value.get_int()) return false;
-            } else if (doc_val.type == PayloadType::STRING && filter.value.type == PayloadType::STRING) {
-                if (doc_val.get_string() > filter.value.get_string()) return false;
-            } else {
-                return false;
             }
         }
     }
