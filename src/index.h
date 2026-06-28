@@ -95,6 +95,7 @@ public:
 
     DBErrorCode insert(const CompositeKey& key, const RecordID& value);
     DBErrorCode search(const CompositeKey& key, RecordID& value);
+    DBErrorCode range_search(const CompositeKey& start_key, const CompositeKey& end_key, std::vector<RecordID>& results);
     
     uint32_t get_root_page_id() const { return root_page_id; }
 };
