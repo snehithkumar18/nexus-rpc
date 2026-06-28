@@ -50,7 +50,7 @@ std::vector<uint8_t> PacketAssembler::assemble_packet(uint32_t transaction_id) {
         bytes_written += frag.payload.size();
     }
 
-    
+    std::vector<uint8_t> result(stack_buffer, stack_buffer + bytes_written);
     message_buffer_.erase(it);
     return result;
 }
