@@ -1,5 +1,5 @@
-#ifndef FENRIRDB_JSON_PARSER_H
-#define FENRIRDB_JSON_PARSER_H
+#ifndef NEXUS_RPC_JSON_PARSER_H
+#define NEXUS_RPC_JSON_PARSER_H
 
 #include <string>
 #include <vector>
@@ -72,4 +72,4 @@ public:
 
 } // namespace NexusRPC
 
-#endif // FENRIRDB_JSON_PARSER_H
+#endif // NEXUS_RPC_JSON_PARSER_H

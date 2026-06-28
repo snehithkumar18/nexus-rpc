@@ -87,7 +87,6 @@ Payload& Payload::operator=(Payload&& other) noexcept {
     return *this;
 }
 
-// INJECTED BUG 2 (Type Confusion): These getters do not validate 'type'.
 // They directly static_cast val_ptr, leading to heap-buffer-overflows if types mismatch.
 int32_t Payload::get_int() const {
     return *static_cast<int32_t*>(val_ptr);

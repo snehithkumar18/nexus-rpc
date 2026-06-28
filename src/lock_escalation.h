@@ -1,5 +1,5 @@
-#ifndef FENRIRDB_LOCK_ESCALATION_H
-#define FENRIRDB_LOCK_ESCALATION_H
+#ifndef NEXUS_RPC_LOCK_ESCALATION_H
+#define NEXUS_RPC_LOCK_ESCALATION_H
 
 #include "lock_manager_advanced.h"
 #include <string>
@@ -31,4 +31,4 @@ public:
 
 } // namespace NexusRPC
 
-#endif // FENRIRDB_LOCK_ESCALATION_H
+#endif // NEXUS_RPC_LOCK_ESCALATION_H

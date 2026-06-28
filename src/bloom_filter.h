@@ -1,5 +1,5 @@
-#ifndef FENRIRDB_BLOOM_FILTER_H
-#define FENRIRDB_BLOOM_FILTER_H
+#ifndef NEXUS_RPC_BLOOM_FILTER_H
+#define NEXUS_RPC_BLOOM_FILTER_H
 
 #include <vector>
 #include <string>
@@ -28,4 +28,4 @@ public:
 
 } // namespace NexusRPC
 
-#endif // FENRIRDB_BLOOM_FILTER_H
+#endif // NEXUS_RPC_BLOOM_FILTER_H

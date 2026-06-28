@@ -1,5 +1,5 @@
-#ifndef FENRIRDB_OPTIMIZER_H
-#define FENRIRDB_OPTIMIZER_H
+#ifndef NEXUS_RPC_OPTIMIZER_H
+#define NEXUS_RPC_OPTIMIZER_H
 
 #include <memory>
 #include <string>
@@ -56,4 +56,4 @@ public:
 
 } // namespace NexusRPC
 
-#endif // FENRIRDB_OPTIMIZER_H
+#endif // NEXUS_RPC_OPTIMIZER_H

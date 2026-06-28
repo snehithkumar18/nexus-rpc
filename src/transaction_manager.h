@@ -1,5 +1,5 @@
-#ifndef FENRIRDB_TRANSACTION_MANAGER_H
-#define FENRIRDB_TRANSACTION_MANAGER_H
+#ifndef NEXUS_RPC_TRANSACTION_MANAGER_H
+#define NEXUS_RPC_TRANSACTION_MANAGER_H
 
 #include <unordered_map>
 #include <vector>
@@ -49,4 +49,4 @@ public:
 
 } // namespace NexusRPC
 
-#endif // FENRIRDB_TRANSACTION_MANAGER_H
+#endif // NEXUS_RPC_TRANSACTION_MANAGER_H

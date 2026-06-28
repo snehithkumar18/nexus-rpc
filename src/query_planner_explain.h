@@ -1,5 +1,5 @@
-#ifndef FENRIRDB_QUERY_PLANNER_EXPLAIN_H
-#define FENRIRDB_QUERY_PLANNER_EXPLAIN_H
+#ifndef NEXUS_RPC_QUERY_PLANNER_EXPLAIN_H
+#define NEXUS_RPC_QUERY_PLANNER_EXPLAIN_H
 
 #include "query_planner.h"
 #include "optimizer_cbo.h"
@@ -23,4 +23,4 @@ public:
 
 } // namespace NexusRPC
 
-#endif // FENRIRDB_QUERY_PLANNER_EXPLAIN_H
+#endif // NEXUS_RPC_QUERY_PLANNER_EXPLAIN_H

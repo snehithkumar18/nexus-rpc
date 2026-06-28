@@ -1,5 +1,5 @@
-#ifndef FENRIRDB_QUERY_ENGINE_COMPILER_H
-#define FENRIRDB_QUERY_ENGINE_COMPILER_H
+#ifndef NEXUS_RPC_QUERY_ENGINE_COMPILER_H
+#define NEXUS_RPC_QUERY_ENGINE_COMPILER_H
 
 #include "sql_parser.h"
 #include "optimizer.h"
@@ -30,4 +30,4 @@ public:
 
 } // namespace NexusRPC
 
-#endif // FENRIRDB_QUERY_ENGINE_COMPILER_H
+#endif // NEXUS_RPC_QUERY_ENGINE_COMPILER_H

@@ -23,7 +23,6 @@ struct ClientSession {
 
 class SessionManager {
 private:
-    // INJECTED BUG 1 (Use-After-Free): Maps client_id to raw ClientSession pointers.
     // If a session is deleted due to duplicate connection or logout, we delete the pointer
     // but do not erase the client_id entry from active_sessions_ under specific state transitions.
     std::unordered_map<std::string, ClientSession*> active_sessions_;

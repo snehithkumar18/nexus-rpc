@@ -1,5 +1,5 @@
-#ifndef FENRIRDB_JSON_SCHEMA_H
-#define FENRIRDB_JSON_SCHEMA_H
+#ifndef NEXUS_RPC_JSON_SCHEMA_H
+#define NEXUS_RPC_JSON_SCHEMA_H
 
 #include "query.h"
 #include <string>
@@ -58,4 +58,4 @@ public:
 
 } // namespace NexusRPC
 
-#endif // FENRIRDB_JSON_SCHEMA_H
+#endif // NEXUS_RPC_JSON_SCHEMA_H

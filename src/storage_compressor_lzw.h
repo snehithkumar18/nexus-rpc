@@ -1,5 +1,5 @@
-#ifndef FENRIRDB_STORAGE_COMPRESSOR_LZW_H
-#define FENRIRDB_STORAGE_COMPRESSOR_LZW_H
+#ifndef NEXUS_RPC_STORAGE_COMPRESSOR_LZW_H
+#define NEXUS_RPC_STORAGE_COMPRESSOR_LZW_H
 
 #include <string>
 #include <vector>
@@ -24,4 +24,4 @@ public:
 
 } // namespace NexusRPC
 
-#endif // FENRIRDB_STORAGE_COMPRESSOR_LZW_H
+#endif // NEXUS_RPC_STORAGE_COMPRESSOR_LZW_H

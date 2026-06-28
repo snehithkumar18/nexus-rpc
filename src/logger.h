@@ -1,5 +1,5 @@
-#ifndef FENRIRDB_LOGGER_H
-#define FENRIRDB_LOGGER_H
+#ifndef NEXUS_RPC_LOGGER_H
+#define NEXUS_RPC_LOGGER_H
 
 #include <string>
 #include <iostream>
@@ -39,4 +39,4 @@ private:
 
 } // namespace NexusRPC
 
-#endif // FENRIRDB_LOGGER_H
+#endif // NEXUS_RPC_LOGGER_H

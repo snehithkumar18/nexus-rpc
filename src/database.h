@@ -1,5 +1,5 @@
-#ifndef FENRIRDB_DATABASE_H
-#define FENRIRDB_DATABASE_H
+#ifndef NEXUS_RPC_DATABASE_H
+#define NEXUS_RPC_DATABASE_H
 
 #include <string>
 #include <vector>
@@ -37,4 +37,4 @@ public:
 
 } // namespace NexusRPC
 
-#endif // FENRIRDB_DATABASE_H
+#endif // NEXUS_RPC_DATABASE_H

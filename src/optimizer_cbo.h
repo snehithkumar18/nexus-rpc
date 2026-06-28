@@ -1,5 +1,5 @@
-#ifndef FENRIRDB_OPTIMIZER_CBO_H
-#define FENRIRDB_OPTIMIZER_CBO_H
+#ifndef NEXUS_RPC_OPTIMIZER_CBO_H
+#define NEXUS_RPC_OPTIMIZER_CBO_H
 
 #include "statistics.h"
 #include "query_planner.h"
@@ -46,4 +46,4 @@ public:
 
 } // namespace NexusRPC
 
-#endif // FENRIRDB_OPTIMIZER_CBO_H
+#endif // NEXUS_RPC_OPTIMIZER_CBO_H

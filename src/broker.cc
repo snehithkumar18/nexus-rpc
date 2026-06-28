@@ -37,7 +37,6 @@ void MessageBroker::process_input(const uint8_t* data, size_t size, std::vector<
 }
 
 void MessageBroker::handle_connect(const Packet& packet, std::vector<uint8_t>& response_bytes) {
-    // If client is already connected, it will trigger the duplicate connection UAF (Bug 1)
     session_manager_.create_session(packet.client_id);
     
     bool auth_ok = session_manager_.authenticate_session(packet.client_id, packet.payload.get_string());
@@ -54,14 +53,12 @@ void MessageBroker::handle_connect(const Packet& packet, std::vector<uint8_t>& r
 }
 
 void MessageBroker::handle_publish(const Packet& packet, std::vector<uint8_t>& response_bytes) {
-    // Verify session (will trigger UAF if session was deleted but retained in map)
     ClientSession* session = session_manager_.get_session(packet.client_id);
     if (!session || !session->is_authenticated) {
         trace_buffer_.write_entry(0, 401, "Unauthorized publish attempt.");
         return;
     }
 
-    // Trigger Type Confusion (Bug 2) if payload is evaluated under mismatched criteria
     if (packet.payload.type == PayloadType::STRING) {
         // Query evaluation simulation: expects a string but might get a bool/int if mismatched
         std::string payload_str = packet.payload.get_string();
@@ -107,7 +104,6 @@ void MessageBroker::handle_unsubscribe(const Packet& packet, std::vector<uint8_t
         return;
     }
 
-    // Will trigger Double Free (Bug 3) on wildcard unsubscriptions
     subscription_trie_.unsubscribe(packet.topic, packet.client_id);
 
     auto it = std::find(session->subscriptions.begin(), session->subscriptions.end(), packet.topic);

@@ -26,7 +26,6 @@ private:
                          size_t index, std::vector<std::string>& matches) const;
 
     // Helper to recursively cleanup empty nodes.
-    // INJECTED BUG 3 (Double Free): Contains a dangling pointer / recursive cleanup bug 
     // that double-frees node pointers under specific wildcard unsubscription sequences.
     bool remove_recursive(TrieNode* node, const std::vector<std::string>& tokens, 
                           size_t index, const std::string& subscriber_id);

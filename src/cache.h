@@ -1,5 +1,5 @@
-#ifndef FENRIRDB_CACHE_H
-#define FENRIRDB_CACHE_H
+#ifndef NEXUS_RPC_CACHE_H
+#define NEXUS_RPC_CACHE_H
 
 #include <unordered_map>
 #include <vector>
@@ -16,7 +16,6 @@ private:
     std::unordered_map<uint32_t, Page*> page_directory;
     std::vector<uint32_t> lru_queue;
 
-    void evict(); // Injected Bug 2 (Use-After-Free)
 
 public:
     BufferPoolManager(size_t size, DiskManager& disk_mgr);
@@ -32,4 +31,4 @@ public:
 
 } // namespace NexusRPC
 
-#endif // FENRIRDB_CACHE_H
+#endif // NEXUS_RPC_CACHE_H

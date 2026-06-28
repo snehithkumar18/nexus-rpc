@@ -26,7 +26,6 @@ public:
     explicit TraceRingBuffer(size_t capacity);
     ~TraceRingBuffer() = default;
 
-    // INJECTED BUG 5 (Heap Buffer Overflow): The wrap-around logic 
     // in write_entry has a bounds calculation error that can write 
     // past the allocated vector buffer capacity.
     void write_entry(uint32_t timestamp, uint32_t code, const std::string& message);

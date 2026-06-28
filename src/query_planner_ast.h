@@ -1,5 +1,5 @@
-#ifndef FENRIRDB_QUERY_PLANNER_AST_H
-#define FENRIRDB_QUERY_PLANNER_AST_H
+#ifndef NEXUS_RPC_QUERY_PLANNER_AST_H
+#define NEXUS_RPC_QUERY_PLANNER_AST_H
 
 #include "query_planner.h"
 #include <memory>
@@ -37,4 +37,4 @@ public:
 
 } // namespace NexusRPC
 
-#endif // FENRIRDB_QUERY_PLANNER_AST_H
+#endif // NEXUS_RPC_QUERY_PLANNER_AST_H

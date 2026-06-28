@@ -1,5 +1,5 @@
-#ifndef FENRIRDB_TRANSACTION_ISOLATION_H
-#define FENRIRDB_TRANSACTION_ISOLATION_H
+#ifndef NEXUS_RPC_TRANSACTION_ISOLATION_H
+#define NEXUS_RPC_TRANSACTION_ISOLATION_H
 
 #include "transaction_manager.h"
 #include <string>
@@ -31,4 +31,4 @@ public:
 
 } // namespace NexusRPC
 
-#endif // FENRIRDB_TRANSACTION_ISOLATION_H
+#endif // NEXUS_RPC_TRANSACTION_ISOLATION_H

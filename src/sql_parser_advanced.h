@@ -1,5 +1,5 @@
-#ifndef FENRIRDB_SQL_PARSER_ADVANCED_H
-#define FENRIRDB_SQL_PARSER_ADVANCED_H
+#ifndef NEXUS_RPC_SQL_PARSER_ADVANCED_H
+#define NEXUS_RPC_SQL_PARSER_ADVANCED_H
 
 #include "sql_parser.h"
 #include "query_planner.h"
@@ -50,4 +50,4 @@ public:
 
 } // namespace NexusRPC
 
-#endif // FENRIRDB_SQL_PARSER_ADVANCED_H
+#endif // NEXUS_RPC_SQL_PARSER_ADVANCED_H

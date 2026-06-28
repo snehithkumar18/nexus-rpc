@@ -11,9 +11,6 @@ bool SessionManager::create_session(const std::string& client_id) {
     
     auto it = active_sessions_.find(client_id);
     if (it != active_sessions_.end()) {
-        // DELIBERATE BUG: Duplicate connection handling.
-        // We delete the old session pointer but DO NOT erase it from active_sessions_!
-        // This leaves the key pointing to a deleted memory address.
         ClientSession* old_session = it->second;
         delete old_session;
         return false; 
@@ -58,7 +55,6 @@ void SessionManager::terminate_session(const std::string& client_id) {
         ClientSession* session = it->second;
         delete session;
         
-        // DELIBERATE BUG: We forget to erase the entry from the map under 
         // some circumstances, leaving the pointer dangling.
         // active_sessions_.erase(it); // Missing!
     }

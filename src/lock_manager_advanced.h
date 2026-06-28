@@ -1,5 +1,5 @@
-#ifndef FENRIRDB_LOCK_MANAGER_ADVANCED_H
-#define FENRIRDB_LOCK_MANAGER_ADVANCED_H
+#ifndef NEXUS_RPC_LOCK_MANAGER_ADVANCED_H
+#define NEXUS_RPC_LOCK_MANAGER_ADVANCED_H
 
 #include <string>
 #include <vector>
@@ -59,4 +59,4 @@ public:
 
 } // namespace NexusRPC
 
-#endif // FENRIRDB_LOCK_MANAGER_ADVANCED_H
+#endif // NEXUS_RPC_LOCK_MANAGER_ADVANCED_H

@@ -1,5 +1,5 @@
-#ifndef FENRIRDB_VECTORIZED_EXECUTOR_H
-#define FENRIRDB_VECTORIZED_EXECUTOR_H
+#ifndef NEXUS_RPC_VECTORIZED_EXECUTOR_H
+#define NEXUS_RPC_VECTORIZED_EXECUTOR_H
 
 #include "query.h"
 #include <vector>
@@ -74,4 +74,4 @@ public:
 
 } // namespace NexusRPC
 
-#endif // FENRIRDB_VECTORIZED_EXECUTOR_H
+#endif // NEXUS_RPC_VECTORIZED_EXECUTOR_H

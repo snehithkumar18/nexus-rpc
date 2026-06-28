@@ -35,7 +35,6 @@ public:
     Payload(Payload&& other) noexcept;
     Payload& operator=(Payload&& other) noexcept;
 
-    // INJECTED BUG 2 (Type Confusion): These getters cast the raw val_ptr 
     // without validating that 'type' matches the requested type.
     int32_t get_int() const;
     std::string get_string() const;

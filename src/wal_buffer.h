@@ -1,5 +1,5 @@
-#ifndef FENRIRDB_WAL_BUFFER_H
-#define FENRIRDB_WAL_BUFFER_H
+#ifndef NEXUS_RPC_WAL_BUFFER_H
+#define NEXUS_RPC_WAL_BUFFER_H
 
 #include <vector>
 #include <string>
@@ -61,4 +61,4 @@ public:
 
 } // namespace NexusRPC
 
-#endif // FENRIRDB_WAL_BUFFER_H
+#endif // NEXUS_RPC_WAL_BUFFER_H

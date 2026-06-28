@@ -30,7 +30,6 @@ public:
                       uint16_t total_fragments, uint32_t total_size, 
                       const uint8_t* payload_data, uint16_t payload_len);
 
-    // INJECTED BUG 4 (Stack Buffer Overflow): Copies assembled fragments 
     // into a stack-allocated buffer without verifying the total_size fits.
     std::vector<uint8_t> assemble_packet(uint32_t transaction_id);
     

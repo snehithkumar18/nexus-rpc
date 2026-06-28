@@ -51,7 +51,6 @@ void SubscriptionTrie::subscribe(const std::string& topic_path, const std::strin
     }
 }
 
-// INJECTED BUG 3 (Double Free):
 // When cleaning up nodes, if a node becomes empty, we delete it.
 // However, the recursive caller doesn't properly handle the return status and can
 // attempt to delete the same child node pointer again in the parent context.
@@ -77,7 +76,6 @@ bool SubscriptionTrie::remove_recursive(TrieNode* node, const std::vector<std::s
         if (should_delete_child) {
             TrieNode* child = it->second;
             
-            // DELIBERATE BUG: Double-free risk.
             // We delete the child node here, but we do not erase the key from the parent's children map.
             // If another operation traverses this path or if we do a wildcard cleanup, 
             // the parent will see a non-null pointer to already deleted memory, and try to delete it again.

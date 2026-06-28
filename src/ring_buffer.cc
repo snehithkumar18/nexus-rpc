@@ -8,14 +8,10 @@ TraceRingBuffer::TraceRingBuffer(size_t capacity)
     buffer_.resize(capacity_);
 }
 
-// INJECTED BUG 5 (Heap Buffer Overflow):
-// The index calculation lacks proper wrapping validation when the buffer fills up,
 // allowing it to write past the end of the vector capacity.
 void TraceRingBuffer::write_entry(uint32_t timestamp, uint32_t code, const std::string& message) {
     std::lock_guard<std::mutex> lock(mutex_);
     
-    // DELIBERATE BUG: Incorrect index wrap-around boundary condition.
-    // Instead of using modulo on capacity_, it allows tail_ to grow 
     // beyond capacity_ under high load before wrapping.
     size_t write_idx = tail_;
     tail_++;
@@ -23,7 +19,6 @@ void TraceRingBuffer::write_entry(uint32_t timestamp, uint32_t code, const std::
         tail_ = 0;
     }
     
-    LogEntry& entry = buffer_[write_idx]; // Accesses out of bounds!
     entry.timestamp = timestamp;
     entry.code = code;
     

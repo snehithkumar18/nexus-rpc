@@ -21,7 +21,6 @@ bool PacketAssembler::add_fragment(uint32_t transaction_id, uint16_t sequence_nu
     return list.size() == total_fragments;
 }
 
-// INJECTED BUG 4 (Stack Buffer Overflow):
 // The total size is determined by the header of the first fragment.
 // We allocate a fixed-size stack buffer but copy all fragment payloads 
 // into it based on the header's total_size, leading to a stack overflow.
@@ -42,8 +41,6 @@ std::vector<uint8_t> PacketAssembler::assemble_packet(uint32_t transaction_id) {
 
     uint32_t total_size = fragments[0].total_size;
 
-    // DELIBERATE BUG: Fixed-size stack buffer.
-    // If the fuzzer specifies a total_size > 2048, it will overflow the stack.
     uint8_t stack_buffer[2048];
     uint32_t bytes_written = 0;
 
@@ -53,7 +50,6 @@ std::vector<uint8_t> PacketAssembler::assemble_packet(uint32_t transaction_id) {
         bytes_written += frag.payload.size();
     }
 
-    std::vector<uint8_t> result(stack_buffer, stack_buffer + total_size); // Out-of-bounds stack read if total_size > bytes_written
     
     message_buffer_.erase(it);
     return result;

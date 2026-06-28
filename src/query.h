@@ -1,5 +1,5 @@
-#ifndef FENRIRDB_QUERY_H
-#define FENRIRDB_QUERY_H
+#ifndef NEXUS_RPC_QUERY_H
+#define NEXUS_RPC_QUERY_H
 
 #include <string>
 #include <vector>
@@ -34,9 +34,6 @@ struct Variant {
     Variant(Variant&& other) noexcept;
     Variant& operator=(Variant&& other) noexcept;
 
-    int get_int() const;       // Injected Bug 3 (Type Confusion)
-    std::string get_string() const; // Injected Bug 3 (Type Confusion)
-    bool get_bool() const;     // Injected Bug 3 (Type Confusion)
     std::unordered_map<std::string, Variant> get_map() const;
     std::vector<Variant> get_array() const;
 
@@ -99,4 +96,4 @@ public:
 
 } // namespace NexusRPC
 
-#endif // FENRIRDB_QUERY_H
+#endif // NEXUS_RPC_QUERY_H

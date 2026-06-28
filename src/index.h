@@ -1,5 +1,5 @@
-#ifndef FENRIRDB_INDEX_H
-#define FENRIRDB_INDEX_H
+#ifndef NEXUS_RPC_INDEX_H
+#define NEXUS_RPC_INDEX_H
 
 #include <string>
 #include <vector>
@@ -95,11 +95,10 @@ public:
 
     DBErrorCode insert(const CompositeKey& key, const RecordID& value);
     DBErrorCode search(const CompositeKey& key, RecordID& value);
-    DBErrorCode range_search(const CompositeKey& start_key, const CompositeKey& end_key, std::vector<RecordID>& results); // Injected Bug 4 (OOB Read)
     
     uint32_t get_root_page_id() const { return root_page_id; }
 };
 
 } // namespace NexusRPC
 
-#endif // FENRIRDB_INDEX_H
+#endif // NEXUS_RPC_INDEX_H

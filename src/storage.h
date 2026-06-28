@@ -1,5 +1,5 @@
-#ifndef FENRIRDB_STORAGE_H
-#define FENRIRDB_STORAGE_H
+#ifndef NEXUS_RPC_STORAGE_H
+#define NEXUS_RPC_STORAGE_H
 
 #include <cstdint>
 #include <vector>
@@ -31,7 +31,6 @@ public:
     DBErrorCode delete_record(uint16_t slot_id);
     DBErrorCode update_record(uint16_t slot_id, const uint8_t* record_data, uint16_t record_len);
 
-    void compact(); // Injected Bug 1 (Heap Buffer Overflow)
 };
 
 class DiskManager {
@@ -51,4 +50,4 @@ public:
 
 } // namespace NexusRPC
 
-#endif // FENRIRDB_STORAGE_H
+#endif // NEXUS_RPC_STORAGE_H

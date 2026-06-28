@@ -1,5 +1,5 @@
-#ifndef FENRIRDB_CHECKPOINT_H
-#define FENRIRDB_CHECKPOINT_H
+#ifndef NEXUS_RPC_CHECKPOINT_H
+#define NEXUS_RPC_CHECKPOINT_H
 
 #include <unordered_map>
 #include <vector>
@@ -40,4 +40,4 @@ public:
 
 } // namespace NexusRPC
 
-#endif // FENRIRDB_CHECKPOINT_H
+#endif // NEXUS_RPC_CHECKPOINT_H

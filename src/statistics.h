@@ -1,5 +1,5 @@
-#ifndef FENRIRDB_STATISTICS_H
-#define FENRIRDB_STATISTICS_H
+#ifndef NEXUS_RPC_STATISTICS_H
+#define NEXUS_RPC_STATISTICS_H
 
 #include "query.h"
 #include <vector>
@@ -49,4 +49,4 @@ public:
 
 } // namespace NexusRPC
 
-#endif // FENRIRDB_STATISTICS_H
+#endif // NEXUS_RPC_STATISTICS_H

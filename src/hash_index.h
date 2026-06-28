@@ -1,5 +1,5 @@
-#ifndef FENRIRDB_HASH_INDEX_H
-#define FENRIRDB_HASH_INDEX_H
+#ifndef NEXUS_RPC_HASH_INDEX_H
+#define NEXUS_RPC_HASH_INDEX_H
 
 #include "storage.h"
 #include <string>
@@ -48,4 +48,4 @@ public:
 
 } // namespace NexusRPC
 
-#endif // FENRIRDB_HASH_INDEX_H
+#endif // NEXUS_RPC_HASH_INDEX_H

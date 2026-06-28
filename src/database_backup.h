@@ -1,5 +1,5 @@
-#ifndef FENRIRDB_DATABASE_BACKUP_H
-#define FENRIRDB_DATABASE_BACKUP_H
+#ifndef NEXUS_RPC_DATABASE_BACKUP_H
+#define NEXUS_RPC_DATABASE_BACKUP_H
 
 #include "database.h"
 #include <string>
@@ -23,4 +23,4 @@ public:
 
 } // namespace NexusRPC
 
-#endif // FENRIRDB_DATABASE_BACKUP_H
+#endif // NEXUS_RPC_DATABASE_BACKUP_H

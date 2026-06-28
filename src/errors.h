@@ -1,5 +1,5 @@
-#ifndef FENRIRDB_ERRORS_H
-#define FENRIRDB_ERRORS_H
+#ifndef NEXUS_RPC_ERRORS_H
+#define NEXUS_RPC_ERRORS_H
 
 #include <string>
 
@@ -36,4 +36,4 @@ inline std::string db_error_to_string(DBErrorCode code) {
 
 } // namespace NexusRPC
 
-#endif // FENRIRDB_ERRORS_H
+#endif // NEXUS_RPC_ERRORS_H
