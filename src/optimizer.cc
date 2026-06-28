@@ -88,6 +88,7 @@ void QueryOptimizer::optimize_pushdowns(SQLSelectStatement& stmt) {
 
 bool QueryOptimizer::choose_index_scan(const std::string& table, const std::string& field, QueryOp op, const Variant& val,
                                        size_t num_pages, size_t index_depth) {
+    (void)table;
     if (field != "id") {
         return false; // No index available on other columns in this release
     }

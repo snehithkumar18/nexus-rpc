@@ -63,6 +63,7 @@ DBErrorCode LockManager::acquire_exclusive(uint32_t tx_id, const RecordID& rid) 
             break;
         }
     }
+    (void)has_shared;
 
     queue.requests.emplace_back(tx_id, LockMode::EXCLUSIVE);
     LockRequest& req = queue.requests.back();
