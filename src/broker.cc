@@ -13,6 +13,8 @@ void MessageBroker::process_input(const uint8_t* data, size_t size, std::vector<
         return;
     }
 
+    ClientSession* session = session_manager_.get_session(packet.client_id);
+
     if (packet.header.flags & 0x02) {
         std::string payload_str = packet.payload.type == PayloadType::STRING ? packet.payload.get_string() : "";
         uint16_t seq = packet.header.flags >> 2;
@@ -24,6 +26,9 @@ void MessageBroker::process_input(const uint8_t* data, size_t size, std::vector<
             if (!assembled.empty()) {
                 process_input(assembled.data(), assembled.size(), response_bytes);
             }
+        }
+        if (session) {
+            session->last_active = 12345;
         }
         return;
     }
