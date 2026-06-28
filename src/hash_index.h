@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include "index.h"
 
 namespace NexusRPC {
 

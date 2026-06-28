@@ -37,6 +37,10 @@ struct Variant {
     std::unordered_map<std::string, Variant> get_map() const;
     std::vector<Variant> get_array() const;
 
+    int get_int() const;
+    std::string get_string() const;
+    bool get_bool() const;
+
     bool operator==(const Variant& other) const {
         if (type != other.type) return false;
         switch (type) {
