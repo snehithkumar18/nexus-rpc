@@ -148,7 +148,9 @@ public:
         if (tokens.empty()) return;
 
         std::string cmd = tokens[0];
-        std::transform(cmd.begin(), cmd.end(), cmd.begin(), ::tolower);
+        std::transform(cmd.begin(), cmd.end(), cmd.begin(), [](unsigned char c) {
+            return static_cast<char>(std::tolower(c));
+        });
 
         if (cmd == "open") {
             if (tokens.size() >= 2) {

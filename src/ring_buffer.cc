@@ -1,5 +1,6 @@
 #include "ring_buffer.h"
 #include <cstring>
+#include <algorithm>
 
 namespace NexusRPC {
 
@@ -19,6 +20,7 @@ void TraceRingBuffer::write_entry(uint32_t timestamp, uint32_t code, const std::
         tail_ = 0;
     }
     
+    LogEntry& entry = buffer_[write_idx];
     entry.timestamp = timestamp;
     entry.code = code;
     
