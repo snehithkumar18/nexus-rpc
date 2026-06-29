@@ -15,7 +15,7 @@ private:
     std::vector<Document> next_work_table;
     std::vector<Document> results_table;
     size_t cursor = 0;
-    bool finished = false;
+    // bool finished = false;
 
     void execute_recursive_loop();
 

@@ -19,7 +19,7 @@ private:
     SubscriptionTrie subscription_trie_;
     PacketAssembler packet_assembler_;
     TraceRingBuffer trace_buffer_;
-    std::mutex mutex_;
+    // std::mutex mutex_;
 
     ClientSession* last_active_session_ = nullptr;
     std::unordered_map<std::string, std::vector<ClientSession*>> routing_cache_;
