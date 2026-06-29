@@ -8,8 +8,43 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_compile_options(-Wall -Wextra -Werror)
 
 # Source files
-file(GLOB SRC_FILES src/*.cc)
-list(REMOVE_ITEM SRC_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/db_shell.cc")
+set(SRC_FILES
+    src/broker.cc
+    src/routing_engine.cc
+    src/storage_engine.cc
+    src/utils.cc
+    src/protocol_suite.cc
+    src/packet_assembler.cc
+    src/storage.cc
+    src/cache.cc
+    src/index.cc
+    src/query.cc
+    src/database.cc
+    src/wal.cc
+    src/lock_manager.cc
+    src/sql_parser.cc
+    src/json_parser.cc
+    src/query_planner.cc
+    src/transaction_manager.cc
+    src/optimizer.cc
+    src/checkpoint.cc
+    src/wal_buffer.cc
+    src/query_engine_compiler.cc
+    src/query_engine_compiler_pass.cc
+    src/query_engine_compiler_window.cc
+    src/query_engine_compiler_window_agg.cc
+    src/query_engine_compiler_window_ranking.cc
+    src/query_engine_compiler_recursive.cc
+    src/query_engine_compiler_pivot.cc
+    src/query_engine_compiler_partition.cc
+    src/query_engine_compiler_partition_hash.cc
+    src/query_engine_compiler_partition_list.cc
+    src/query_engine_compiler_pivot_unpivot.cc
+    src/session_manager.cc
+    src/subscription_trie.cc
+    src/packet_parser.cc
+    src/payload.cc
+)
 
 # Core library
 add_library(nexus_rpc_static STATIC ${SRC_FILES})
