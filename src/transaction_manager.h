@@ -30,7 +30,6 @@ class TransactionManager {
 private:
     std::mutex mutex_;
     uint32_t next_tx_id = 1;
-    uint64_t global_ts = 1;
     std::unordered_map<uint32_t, std::shared_ptr<Transaction>> tx_table;
     LogManager& log_manager;
     LockManager& lock_manager;

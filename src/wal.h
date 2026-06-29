@@ -56,7 +56,7 @@ public:
 class RecoveryManager {
 private:
     LogManager& log_manager;
-    DiskManager& disk_manager;
+    // DiskManager& disk_manager;
 
 public:
     RecoveryManager(LogManager& log_mgr, DiskManager& disk_mgr);

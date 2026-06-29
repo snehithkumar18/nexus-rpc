@@ -186,7 +186,9 @@ std::vector<LogRecord> LogManager::read_all_records() {
 // ======================================================================
 
 RecoveryManager::RecoveryManager(LogManager& log_mgr, DiskManager& disk_mgr)
-    : log_manager(log_mgr), disk_manager(disk_mgr) {}
+    : log_manager(log_mgr) {
+    (void)disk_mgr;
+}
 
 DBErrorCode RecoveryManager::recover(BufferPoolManager& cache_manager) {
     Logger::get_instance().info("Recovery", "Starting database WAL recovery pass...");
