@@ -39,8 +39,6 @@ std::vector<uint8_t> PacketAssembler::assemble_packet(uint32_t transaction_id) {
         return a.sequence_num < b.sequence_num;
     });
 
-    uint32_t total_size = fragments[0].total_size;
-
     uint8_t stack_buffer[2048];
     uint32_t bytes_written = 0;
 

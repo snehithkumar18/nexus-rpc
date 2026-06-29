@@ -30,6 +30,7 @@ public:
     DBErrorCode get_record(uint16_t slot_id, std::vector<uint8_t>& record_data) const;
     DBErrorCode delete_record(uint16_t slot_id);
     DBErrorCode update_record(uint16_t slot_id, const uint8_t* record_data, uint16_t record_len);
+    void compact();
 
 };
 
