@@ -1,5 +1,6 @@
 #include "query_planner.h"
 #include "logger.h"
+#include <algorithm>
 
 namespace NexusRPC {
 

@@ -5,7 +5,11 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Enable all warnings
-add_compile_options(-Wall -Wextra -Werror)
+if(MSVC)
+    add_compile_options(/W4 /WX)
+else()
+    add_compile_options(-Wall -Wextra -Werror)
+endif()
 
 # Source files
 set(SRC_FILES
@@ -43,6 +47,7 @@ set(SRC_FILES
     src/subscription_trie.cc
     src/packet_parser.cc
     src/payload.cc
+    src/ring_buffer.cc
 )
 
 # Core library

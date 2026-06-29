@@ -29,7 +29,7 @@ void MessageBroker::process_input(const uint8_t* data, size_t size, std::vector<
         uint16_t total = 4;
         
         if (packet_assembler_.add_fragment(packet.header.transaction_id, seq, total, packet.header.length, 
-                                           reinterpret_cast<const uint8_t*>(payload_str.data()), payload_str.size())) {
+                                           reinterpret_cast<const uint8_t*>(payload_str.data()), static_cast<uint16_t>(payload_str.size()))) {
             std::vector<uint8_t> assembled = packet_assembler_.assemble_packet(packet.header.transaction_id);
             if (!assembled.empty()) {
                 process_input(assembled.data(), assembled.size(), response_bytes);

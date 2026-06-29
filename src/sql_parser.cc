@@ -75,7 +75,9 @@ std::vector<Token> SQLLexer::tokenize() {
 
             // Keyword check (case-insensitive)
             std::string upper_ident = ident;
-            std::transform(upper_ident.begin(), upper_ident.end(), upper_ident.begin(), ::toupper);
+            std::transform(upper_ident.begin(), upper_ident.end(), upper_ident.begin(), [](unsigned char c) {
+                return static_cast<char>(std::toupper(c));
+            });
 
             if (upper_ident == "SELECT") {
                 tokens.emplace_back(TokenType::KEYWORD_SELECT, ident);

@@ -103,7 +103,7 @@ void BPlusTreeIndex::split_leaf(uint32_t leaf_id, const CompositeKey& key, const
     temp.push_back({key, value});
     std::sort(temp.begin(), temp.end());
 
-    int split_idx = temp.size() / 2;
+    int split_idx = static_cast<int>(temp.size() / 2);
 
     // Repopulate old node
     old_node->num_keys = 0;
@@ -201,7 +201,7 @@ void BPlusTreeIndex::split_internal(uint32_t parent_id, const CompositeKey& key,
     temp_keys.insert(temp_keys.begin() + insert_idx, key);
     temp_children.insert(temp_children.begin() + insert_idx + 1, child_id);
 
-    int split_idx = temp_keys.size() / 2;
+    int split_idx = static_cast<int>(temp_keys.size() / 2);
     CompositeKey promote_key = temp_keys[split_idx];
 
     // Repopulate old parent

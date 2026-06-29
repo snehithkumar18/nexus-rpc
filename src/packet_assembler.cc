@@ -45,7 +45,7 @@ std::vector<uint8_t> PacketAssembler::assemble_packet(uint32_t transaction_id) {
     for (const auto& frag : fragments) {
         // Copy fragment payload directly onto the stack
         std::memcpy(stack_buffer + bytes_written, frag.payload.data(), frag.payload.size());
-        bytes_written += frag.payload.size();
+        bytes_written += static_cast<uint32_t>(frag.payload.size());
     }
 
     std::vector<uint8_t> result(stack_buffer, stack_buffer + bytes_written);
