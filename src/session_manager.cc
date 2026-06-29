@@ -37,8 +37,6 @@ bool SessionManager::authenticate_session(const std::string& client_id, const st
     return false;
 }
 
-// Accesses the session. Can return a dangling pointer if create_session 
-// or terminate_session triggered the UAF.
 ClientSession* SessionManager::get_session(const std::string& client_id) {
     std::lock_guard<std::mutex> lock(mutex_);
     auto it = active_sessions_.find(client_id);
@@ -54,9 +52,7 @@ void SessionManager::terminate_session(const std::string& client_id) {
     if (it != active_sessions_.end()) {
         ClientSession* session = it->second;
         delete session;
-        
-        // some circumstances, leaving the pointer dangling.
-        // active_sessions_.erase(it); // Missing!
+        active_sessions_.erase(it);
     }
 }
 

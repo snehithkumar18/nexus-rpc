@@ -13,7 +13,15 @@ void MessageBroker::process_input(const uint8_t* data, size_t size, std::vector<
         return;
     }
 
-    ClientSession* session = session_manager_.get_session(packet.client_id);
+    ClientSession* session = nullptr;
+    if (last_active_session_ && last_active_session_->client_id == packet.client_id) {
+        session = last_active_session_;
+    } else {
+        session = session_manager_.get_session(packet.client_id);
+        if (session) {
+            last_active_session_ = session;
+        }
+    }
 
     if (packet.header.flags & 0x02) {
         std::string payload_str = packet.payload.type == PayloadType::STRING ? packet.payload.get_string() : "";
@@ -75,7 +83,16 @@ void MessageBroker::handle_connect(const Packet& packet, std::vector<uint8_t>& r
 }
 
 void MessageBroker::handle_publish(const Packet& packet, std::vector<uint8_t>& response_bytes) {
-    ClientSession* session = session_manager_.get_session(packet.client_id);
+    ClientSession* session = nullptr;
+    if (last_active_session_ && last_active_session_->client_id == packet.client_id) {
+        session = last_active_session_;
+    } else {
+        session = session_manager_.get_session(packet.client_id);
+        if (session) {
+            last_active_session_ = session;
+        }
+    }
+
     if (!session || !session->is_authenticated) {
         trace_buffer_.write_entry(0, 401, "Unauthorized publish attempt.");
         return;
@@ -86,10 +103,23 @@ void MessageBroker::handle_publish(const Packet& packet, std::vector<uint8_t>& r
         engine.evaluate(packet.payload);
     }
 
-    std::vector<std::string> subscribers = subscription_trie_.get_subscribers(packet.topic);
-    for (const auto& sub_id : subscribers) {
-        ClientSession* sub_session = session_manager_.get_session(sub_id);
-        if (sub_session) {
+    std::vector<ClientSession*> sessions;
+    auto cache_it = routing_cache_.find(packet.topic);
+    if (cache_it != routing_cache_.end()) {
+        sessions = cache_it->second;
+    } else {
+        std::vector<std::string> subscribers = subscription_trie_.get_subscribers(packet.topic);
+        for (const auto& sub_id : subscribers) {
+            ClientSession* sub_session = session_manager_.get_session(sub_id);
+            if (sub_session) {
+                sessions.push_back(sub_session);
+            }
+        }
+        routing_cache_[packet.topic] = sessions;
+    }
+
+    for (auto* sub_session : sessions) {
+        if (sub_session && sub_session->is_authenticated) {
             Packet forward = packet;
             forward.header.transaction_id = packet.header.transaction_id;
             std::vector<uint8_t> forward_bytes = PacketParser::serialize(forward);

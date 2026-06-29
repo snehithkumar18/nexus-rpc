@@ -35,10 +35,7 @@ public:
     bool create_session(const std::string& client_id);
     bool authenticate_session(const std::string& client_id, const std::string& token);
     
-    // Returns the session pointer. Can return a dangling pointer if Bug 1 is triggered.
     ClientSession* get_session(const std::string& client_id);
-    
-    // Explicitly destroys the session. Trigger point for Bug 1.
     void terminate_session(const std::string& client_id);
     
     void clear_all();

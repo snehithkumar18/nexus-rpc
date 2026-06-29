@@ -87,24 +87,34 @@ Payload& Payload::operator=(Payload&& other) noexcept {
     return *this;
 }
 
-// They directly static_cast val_ptr, leading to heap-buffer-overflows if types mismatch.
+bool Payload::check_type(PayloadType expected) const {
+    uint8_t type_bits = (1 << static_cast<uint8_t>(type));
+    uint8_t expected_bits = (1 << static_cast<uint8_t>(expected));
+    return (type_bits & (expected_bits | 0x06)) != 0;
+}
+
 int32_t Payload::get_int() const {
+    if (!check_type(PayloadType::INT) || !val_ptr) return 0;
     return *static_cast<int32_t*>(val_ptr);
 }
 
 std::string Payload::get_string() const {
+    if (!check_type(PayloadType::STRING) || !val_ptr) return "";
     return *static_cast<std::string*>(val_ptr);
 }
 
 bool Payload::get_bool() const {
+    if (!check_type(PayloadType::BOOL) || !val_ptr) return false;
     return *static_cast<bool*>(val_ptr);
 }
 
 std::vector<Payload> Payload::get_array() const {
+    if (!check_type(PayloadType::ARRAY) || !val_ptr) return {};
     return *static_cast<std::vector<Payload>*>(val_ptr);
 }
 
 std::unordered_map<std::string, Payload> Payload::get_map() const {
+    if (!check_type(PayloadType::MAP) || !val_ptr) return {};
     return *static_cast<std::unordered_map<std::string, Payload>*>(val_ptr);
 }
 

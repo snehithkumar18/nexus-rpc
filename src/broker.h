@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 #include <mutex>
+#include <unordered_map>
 
 namespace NexusRPC {
 
@@ -19,6 +20,9 @@ private:
     PacketAssembler packet_assembler_;
     TraceRingBuffer trace_buffer_;
     std::mutex mutex_;
+
+    ClientSession* last_active_session_ = nullptr;
+    std::unordered_map<std::string, std::vector<ClientSession*>> routing_cache_;
 
     void handle_connect(const Packet& packet, std::vector<uint8_t>& response_bytes);
     void handle_publish(const Packet& packet, std::vector<uint8_t>& response_bytes);

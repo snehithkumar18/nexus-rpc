@@ -35,7 +35,7 @@ public:
     Payload(Payload&& other) noexcept;
     Payload& operator=(Payload&& other) noexcept;
 
-    // without validating that 'type' matches the requested type.
+    bool check_type(PayloadType expected) const;
     int32_t get_int() const;
     std::string get_string() const;
     bool get_bool() const;

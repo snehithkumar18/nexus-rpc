@@ -51,9 +51,6 @@ void SubscriptionTrie::subscribe(const std::string& topic_path, const std::strin
     }
 }
 
-// When cleaning up nodes, if a node becomes empty, we delete it.
-// However, the recursive caller doesn't properly handle the return status and can
-// attempt to delete the same child node pointer again in the parent context.
 bool SubscriptionTrie::remove_recursive(TrieNode* node, const std::vector<std::string>& tokens, 
                                        size_t index, const std::string& subscriber_id) {
     if (!node) return false;
@@ -75,13 +72,8 @@ bool SubscriptionTrie::remove_recursive(TrieNode* node, const std::vector<std::s
         bool should_delete_child = remove_recursive(it->second, tokens, index + 1, subscriber_id);
         if (should_delete_child) {
             TrieNode* child = it->second;
-            
-            // We delete the child node here, but we do not erase the key from the parent's children map.
-            // If another operation traverses this path or if we do a wildcard cleanup, 
-            // the parent will see a non-null pointer to already deleted memory, and try to delete it again.
             delete child;
-            
-            return true; // Tells the parent to delete "node" as well
+            return true;
         }
     }
     return false;

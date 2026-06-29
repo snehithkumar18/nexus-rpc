@@ -106,7 +106,6 @@ bool FilterExecutor::next(Document& doc, RecordID& rid) {
     while (child->next(doc, rid)) {
         Variant doc_val;
         if (doc.get_field(field, doc_val)) {
-            // Apply expression evaluation (Bug 3 Type Confusion can trigger here!)
             if (val.type == VariantType::INT) {
                 int left = doc_val.get_int();
                 int right = val.get_int();

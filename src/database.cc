@@ -1,11 +1,15 @@
 #include "database.h"
 #include "logger.h"
+#include <cstring>
 
 namespace NexusRPC {
 
+// ... open and close methods ...
+
+
 DBErrorCode Database::open(const std::string& filepath) {
     disk_manager = std::make_unique<DiskManager>(filepath);
-    cache_manager = std::make_unique<BufferPoolManager>(10, *disk_manager); // Pool size of 10 pages
+    cache_manager = std::make_unique<BufferPoolManager>(3, *disk_manager); // Pool size of 3 pages
 
     if (disk_manager->get_num_pages() == 0) {
         // Allocate page 0 as B+ Tree index root page
@@ -70,6 +74,12 @@ DBErrorCode Database::insert(const std::string& key, const Document& doc) {
     RecordID val = { doc_page_id, slot_id };
     res = index->insert(CompositeKey(key), val);
     
+    if (res == DBErrorCode::SUCCESS) {
+        // Set LSN in page header (first 8 bytes of page data)
+        uint64_t lsn = 12345;
+        std::memcpy(page->data, &lsn, 8);
+    }
+
     Logger::get_instance().info("Database", "Inserted document under key: " + key + " at Page=" + std::to_string(doc_page_id));
     return res;
 }
