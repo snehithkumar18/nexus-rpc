@@ -12,7 +12,6 @@ set(SRC_FILES
     src/broker.cc
     src/routing_engine.cc
     src/storage_engine.cc
-    src/utils.cc
     src/protocol_suite.cc
     src/packet_assembler.cc
     src/storage.cc
