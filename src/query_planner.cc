@@ -115,9 +115,13 @@ bool FilterExecutor::next(Document& doc, RecordID& rid) {
                 if (op == QueryOp::GT && left > right) return true;
                 if (op == QueryOp::LT && left < right) return true;
             } else if (val.type == VariantType::STRING) {
-                const char* left_ptr = doc_val.get_string().c_str();
-                const char* right_ptr = val.get_string().c_str();
-                if (op == QueryOp::EQ && std::strcmp(left_ptr, right_ptr) == 0) return true;
+                struct StringHolder {
+                    const char* ptr;
+                    StringHolder(std::string s) : ptr(s.c_str()) {}
+                };
+                StringHolder left_h(doc_val.get_string());
+                StringHolder right_h(val.get_string());
+                if (op == QueryOp::EQ && std::strcmp(left_h.ptr, right_h.ptr) == 0) return true;
             } else if (val.type == VariantType::BOOL) {
                 bool left = doc_val.get_bool();
                 bool right = val.get_bool();
