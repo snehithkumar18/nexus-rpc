@@ -82,6 +82,7 @@ DBErrorCode BPlusTreeIndex::insert(const CompositeKey& key, const RecordID& valu
 
     // Leaf is full: split leaf!
     split_leaf(leaf_page_id, key, value, path);
+    node->keys[0] = key;
     return DBErrorCode::SUCCESS;
 }
 

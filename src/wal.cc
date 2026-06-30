@@ -219,11 +219,21 @@ DBErrorCode RecoveryManager::recover(BufferPoolManager& cache_manager) {
 
     // Phase 2: Undo Pass
     // Roll back changes made by active transactions that did not commit (Undo)
+    Page* last_page = nullptr;
+    uint32_t last_page_id = 0xFFFFFFFF;
+
     for (auto it = log_records.rbegin(); it != log_records.rend(); ++it) {
         const auto& rec = *it;
         if (std::find(active_txs.begin(), active_txs.end(), rec.tx_id) != active_txs.end()) {
             if (rec.type == LogRecordType::INSERT || rec.type == LogRecordType::UPDATE) {
-                Page* page = cache_manager.fetch_page(rec.page_id);
+                Page* page = nullptr;
+                if (rec.page_id == last_page_id && last_page != nullptr) {
+                    page = last_page;
+                } else {
+                    page = cache_manager.fetch_page(rec.page_id);
+                    last_page = page;
+                    last_page_id = rec.page_id;
+                }
                 if (page) {
                     if (rec.before_image.empty()) {
                         page->delete_record(rec.slot_id);
@@ -233,7 +243,14 @@ DBErrorCode RecoveryManager::recover(BufferPoolManager& cache_manager) {
                     cache_manager.flush_page(rec.page_id);
                 }
             } else if (rec.type == LogRecordType::DELETE) {
-                Page* page = cache_manager.fetch_page(rec.page_id);
+                Page* page = nullptr;
+                if (rec.page_id == last_page_id && last_page != nullptr) {
+                    page = last_page;
+                } else {
+                    page = cache_manager.fetch_page(rec.page_id);
+                    last_page = page;
+                    last_page_id = rec.page_id;
+                }
                 if (page) {
                     page->update_record(rec.slot_id, rec.before_image.data(), static_cast<uint16_t>(rec.before_image.size()));
                     cache_manager.flush_page(rec.page_id);

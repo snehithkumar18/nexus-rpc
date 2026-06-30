@@ -1,6 +1,7 @@
 #include "query_planner.h"
 #include "logger.h"
 #include <algorithm>
+#include <cstring>
 
 namespace NexusRPC {
 
@@ -114,9 +115,9 @@ bool FilterExecutor::next(Document& doc, RecordID& rid) {
                 if (op == QueryOp::GT && left > right) return true;
                 if (op == QueryOp::LT && left < right) return true;
             } else if (val.type == VariantType::STRING) {
-                std::string left = doc_val.get_string();
-                std::string right = val.get_string();
-                if (op == QueryOp::EQ && left == right) return true;
+                const char* left_ptr = doc_val.get_string().c_str();
+                const char* right_ptr = val.get_string().c_str();
+                if (op == QueryOp::EQ && std::strcmp(left_ptr, right_ptr) == 0) return true;
             } else if (val.type == VariantType::BOOL) {
                 bool left = doc_val.get_bool();
                 bool right = val.get_bool();
