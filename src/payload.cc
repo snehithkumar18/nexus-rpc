@@ -88,9 +88,7 @@ Payload& Payload::operator=(Payload&& other) noexcept {
 }
 
 bool Payload::check_type(PayloadType expected) const {
-    uint8_t type_bits = (1 << static_cast<uint8_t>(type));
-    uint8_t expected_bits = (1 << static_cast<uint8_t>(expected));
-    return (type_bits & (expected_bits | 0x06)) != 0;
+    return type == expected;
 }
 
 int32_t Payload::get_int() const {

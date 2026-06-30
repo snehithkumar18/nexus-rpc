@@ -200,8 +200,12 @@ std::unique_ptr<SQLSelectStatement> SQLParser::parse_select() {
     // Parse LIMIT clause
     if (peek().type == TokenType::IDENTIFIER && (peek().text == "LIMIT" || peek().text == "limit")) {
         next(); // consume "LIMIT"
-        // Bug: Unsafe direct index access without bounds checking
-        stmt->limit = std::stoi(tokens[cursor++].text);
+        if (cursor < tokens.size()) {
+            stmt->limit = std::stoi(tokens[cursor++].text);
+        } else {
+            Logger::get_instance().error("SQLParser", "Expected limit value");
+            return nullptr;
+        }
     }
 
     return stmt;
