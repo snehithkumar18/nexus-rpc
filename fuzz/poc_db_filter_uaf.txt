@@ -1,0 +1,2 @@
+INSERT INTO users k1 (name) VALUES ('alice');
+SELECT name FROM users WHERE name = 'alice';
